@@ -6,27 +6,24 @@
                 <th>Name</th>
                 <th>Genre</th>
                 <th>Release Date</th>
+                <th><input type="checkbox" @onchange="(() => displayButtons = !displayButtons)" /></th>
             </tr>
         </thead>
         <tbody>
 
-            @if (games == null)
+            @if (Games == null)
             {
                 <tr>LOADING DATA...</tr>
             }
-            else if (games.Count == 0)
+            else if (Games.Count == 0)
             {
                 <tr>NO ITEMS IN ARRAY</tr>
             }
             else
             {
-                @foreach (Game game in games)
+                @foreach (Game game in Games)
                 {
-                    <tr>
-                        <td>@game.Name</td>
-                        <td>@game.Genre</td>
-                        <td>@game.ReleaseDate.ToString("yyyy.MM.dd")</td>
-                    </tr>
+                    <IndividualGame Game="game" IsTable="true" DisplayButtons="displayButtons"/>
                 } 
             }
         </tbody>
@@ -34,31 +31,7 @@
 </div>
 
 @code {
-    private List<Game> games { get; set; }
+    [Parameter] public List<Game> Games { get; set; }
 
-    protected async override Task OnInitializedAsync()
-    {
-        await Task.Delay(3000);
-        games = new List<Game>()
-        {
-            new Game()
-            {
-                Name = "Farming Simulator 2019",
-                Genre = "Simulator",
-                ReleaseDate = new DateTime(2018, 11, 19)
-            },
-            new Game()
-            {
-                Name = "The Witcher 3",
-                Genre = "Action/RPG",
-                ReleaseDate = new DateTime(2015, 05, 18)
-            },
-            new Game()
-            {
-                Name = "Destory All Humans!",
-                Genre = "Action-Adventure",
-                ReleaseDate = new DateTime(2020, 07, 28)
-            },
-        };
-    }
+    bool displayButtons = false;
 }

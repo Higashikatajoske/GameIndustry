@@ -22,11 +22,27 @@
 @code {
     [Parameter] public List<Game> Games { get; set; }
 
-
     bool displayButtons = false;
 
     void DeleteTheGame(Game game)
     {
         Games.Remove(game);
     }
+
+    /*-------------------------------------------------------------*/
+    protected override void OnInitialized()
+    {
+        Console.WriteLine($"1. OnInitialized(). Games count: {Games?.Count}.");
+    }
+
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine($"2. OnParametersSet(). Games count: {Games?.Count}.");
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine($"3. OnAfterRender(bool firstRender). First render: {firstRender}");
+    }
+
 }

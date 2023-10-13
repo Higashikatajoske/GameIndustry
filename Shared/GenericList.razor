@@ -1,0 +1,42 @@
+﻿@typeparam TItem
+
+@if (ListOfItems == null)
+{
+    @if (NullList != null)
+    {
+        @NullList
+    }
+    else
+    {
+        <img src="https://media4.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=6c09b952mlvvpmv8a9xntdyrkzw4ntmhe1ksutb5hsct99la&ep=v1_gifs_search&rid=200w.gif&ct=g"
+             height="200" />
+    }
+}
+else if (ListOfItems.Count == 0)
+{
+    @if (NullList != null)
+    {
+        @EmptyList
+    }
+    else
+    {
+        <img src="https://media.licdn.com/dms/image/C560BAQHvjs3O4Utmdw/company-logo_200_200/0/1519867717451?e=2147483647&v=beta&t=_ljcO2P4eZKn4slFIQnwCWJZAqCMSDdSEcpx02bS5v0"
+             height="200" />
+    }
+}
+else
+{
+    @foreach (TItem item in ListOfItems)
+    {
+        @ItemTemplate(item);
+    }
+}
+
+@code {
+    [Parameter] public RenderFragment NullList { get; set; }
+    [Parameter] public RenderFragment EmptyList { get; set; }
+
+    [Parameter] public RenderFragment<TItem> ItemTemplate { get; set; }
+
+    [Parameter] public List<TItem> ListOfItems { get; set; }
+}

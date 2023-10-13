@@ -1,39 +1,39 @@
 ﻿
-@if (!IsTable)
-{
-    <div class="row text-center alert alert-info">
-        <div class="row">
-            <p>@Game.Name</p>
-            <p>@Game.Genre</p>
-            <p>@Game.ReleaseDate.ToString("yyyy.MM.dd")</p>
-        </div>
-    </div>
-
-    @if (DisplayButtons)
+@if (Game != null){
+    @if (!IsTable)
     {
-        <div class="row">
-            <div class="col offset-3">
-                <button class="btn btn-danger" @onclick="SwitchGame">Switch game</button>
+        <div class="row text-center alert alert-info">
+            <div class="row">
+                <p>@Game.Name</p>
+                <p>@Game.Genre</p>
+                <p>@Game.ReleaseDate.ToString("yyyy.MM.dd")</p>
             </div>
-            <div class="col">
+
+        @if (DisplayButtons)
+        {
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-primary" @onclick="SwitchGame">Switch game</button>
+                </div>
             </div>
+        }
         </div>
     }
-}
-else
-{
-    <tr>
-        <td>@Game.Name</td>
-        <td>@Game.Genre</td>
-        <td>@Game.ReleaseDate.ToString("yyyy.MM.dd")</td>
-        <td>
+    else
+    {
+        <tr>
+            <td>@Game.Name</td>
+            <td>@Game.Genre</td>
+            <td>@Game.ReleaseDate.ToString("yyyy.MM.dd")</td>
+            <td>
 
-            @if (DisplayButtons)
-            {
-                <button class="btn btn-danger" @onclick="(() => DeleteGame.InvokeAsync(Game))">Delete</button>
-            }
-        </td>
-    </tr>
+                @if (DisplayButtons)
+                {
+                    <button class="btn btn-danger" @onclick="(() => DeleteGame.InvokeAsync(Game))">Delete</button>
+                }
+            </td>
+        </tr>
+    }
 }
 
 @code {

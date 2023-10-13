@@ -14,10 +14,13 @@
 
 <GameListTable Games="games"/>
 
-<IndividualGame Game="games.FirstOrDefault()" IsTable="false" DisplayButtons="true"/>
+<IndividualGame Game="oneGameToShow" IsTable="false" DisplayButtons="true" SwitchGame="ShowNewGame"/>
 
 @code {
-    List<Game> games;
+
+    private List<Game> games;
+    private Random rnd;
+    private Game oneGameToShow;
 
     protected override void OnInitialized()
     {
@@ -42,5 +45,38 @@
                 ReleaseDate = new DateTime(2020, 07, 28)
             },
         };
+
+        rnd = new Random(DateTime.Now.Millisecond);
+        oneGameToShow = games[rnd.Next(0, games.Count)];
+    }
+
+    private void ShowNewGame()
+    {
+        oneGameToShow = SwitchGame();
+    }
+
+    private Game SwitchGame()
+    {
+        Game tempGame;
+
+        if (games.Count >= 2)
+        {
+            int iterator = rnd.Next(0, games.Count);
+            tempGame = games[iterator];
+        }
+        else if (games.Count == 1)
+        {
+            tempGame = games[0];
+        }
+        else
+        {
+            return new Game() 
+            { 
+                Name = "No items in array!", 
+                ReleaseDate = DateTime.Now
+            };
+        }
+
+        return tempGame;
     }
 }

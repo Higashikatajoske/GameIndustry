@@ -45,4 +45,9 @@
         Console.WriteLine($"3. OnAfterRender(bool firstRender). First render: {firstRender}");
     }
 
+    protected override bool ShouldRender()
+    {
+        return true;
+    }
+
 }

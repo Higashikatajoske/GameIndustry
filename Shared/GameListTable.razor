@@ -6,15 +6,18 @@
                 <th>Name</th>
                 <th>Genre</th>
                 <th>Release Date</th>
-                <th><input type="checkbox" @bind="displayButtons"/></th>
+                <th><input type="checkbox" @bind="_displayButtons"/></th>
             </tr>
         </thead>
         <tbody>
             <GenericList ListOfItems="Games">
                 <ItemTemplate Context="game">
-                    <IndividualGame Game="game" IsTable="true" DisplayButtons="displayButtons" DeleteGame="DeleteTheGame" />
+                    <IndividualGame Game="game" IsTable="true" DisplayButtons="_displayButtons" DeleteGame="DeleteTheGame" />
                 </ItemTemplate>
             </GenericList>
+            <Confirmation @ref="_confirmation" onCancel="OnCancel" onConfirm="OnConfirm">
+                <div class="text-danger">Do you wish to delete @_gameToBeDeleted.Name</div>
+            </Confirmation>
         </tbody>
     </table>
 </div>
@@ -22,11 +25,14 @@
 @code {
     [Parameter] public List<Game> Games { get; set; }
 
-    bool displayButtons = false;
+    private bool _displayButtons = false;
+    private Confirmation _confirmation;
+    private Game _gameToBeDeleted;
 
     void DeleteTheGame(Game game)
     {
-        Games.Remove(game);
+        _gameToBeDeleted = game;
+        _confirmation.Show();
     }
 
     /*-------------------------------------------------------------*/
@@ -50,4 +56,20 @@
         return true;
     }
 
+    // public void DoSomeThing()
+    // {
+    //     // Some crazy logic...
+    // 
+    private void OnConfirm()
+    {
+        Games.Remove(_gameToBeDeleted);
+        _confirmation.Hide();
+        _gameToBeDeleted = null;
+    }
+
+    private void OnCancel()
+    {
+        _confirmation.Hide();
+        _gameToBeDeleted = null;
+    }
 }

@@ -1,8 +1,4 @@
 ﻿@page "/counter"
-@using GameIndustry.Services;
-
-@inject SingletonService singletonService
-@inject TransientService transientService
 
 
 <PageTitle>Counter</PageTitle>
@@ -36,15 +32,3 @@
         Transient count: @transientService.Value
     </div>
 </div>
-
-@code {
-    private int currentCount = 0;
-
-    private void IncrementCount()
-    {
-        currentCount++;
-
-        singletonService.Value = currentCount;
-        transientService.Value = currentCount;
-    }
-}

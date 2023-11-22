@@ -1,5 +1,5 @@
-﻿
-@if (Game != null){
+﻿@if (Game != null)
+{
     @if (!IsTable)
     {
         <div class="row text-center alert alert-info">
@@ -9,14 +9,23 @@
                 <p>@Game.ReleaseDate.ToString("yyyy.MM.dd")</p>
             </div>
 
-        @if (DisplayButtons)
-        {
-            <div class="row">
-                <div class="col">
-                    <button class="btn btn-primary" @onclick="SwitchGame">Switch game</button>
+            @if (DisplayButtons)
+            {
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-primary" @onclick="SwitchGame">Switch the game</button>
+                    </div>
                 </div>
-            </div>
-        }
+            }
+
+            @if (Game.Name.Equals("The Witcher 3") && AppStyles.WitcherWords != null)
+            {
+                <div class="row mt-3">
+                    <div class="col alert alert-light text-center">
+                        @AppStyles.WitcherWords[_random.Next(0, AppStyles.WitcherWords.Count)]
+                    </div>
+                </div>
+            }
         </div>
     }
     else
@@ -37,11 +46,23 @@
 }
 
 @code {
-    [Parameter] public Game Game { get; set; }
-    [Parameter] public bool IsTable { get; set; }
+    [Parameter]
+    public Game Game { get; set; }
 
-    [Parameter] public bool DisplayButtons { get; set; } = false;
-    [Parameter] public EventCallback<Game> DeleteGame { get; set; }
-    [Parameter] public EventCallback SwitchGame { get; set; }
+    [Parameter]
+    public bool IsTable { get; set; }
+
+    [Parameter]
+    public bool DisplayButtons { get; set; } = false;
+
+    [Parameter]
+    public EventCallback<Game> DeleteGame { get; set; }
+
+    [Parameter]
+    public EventCallback SwitchGame { get; set; }
+
+    [CascadingParameter]
+    public AppStyle AppStyles { get; set; }
+
+    private Random _random = new Random(DateTime.Now.Millisecond);
 }
- 

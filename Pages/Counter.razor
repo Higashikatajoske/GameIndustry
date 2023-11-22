@@ -5,7 +5,7 @@
 
 <div class="row">
     <div class="col alert alert-secondary text-center">
-        <h1>COUNTER</h1>
+        <h1 style="color: @Styles.Color">COUNTER</h1>
     </div>
 </div>
 
@@ -14,7 +14,7 @@
         <button class="btn btn-primary p-3" @onclick="IncrementCount">Click me</button>
     </div>
     <div class="col-6 text-end">
-        <div style="font-size: 50px">@currentCount</div>
+        <div style="font-size: @Styles.Size; color: @Styles.Color">@currentCount</div>
     </div>
 </div>
 

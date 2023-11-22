@@ -13,8 +13,23 @@
         </div>
 
         <article class="content px-4">
-            @Body
+@*             <CascadingValue Value="Color" Name="Color">
+                <CascadingValue Value="Size" Name="Size"> *@
+            <CascadingValue Value="appStyle">
+                @Body
+            </CascadingValue>
+                    
+@*                 </CascadingValue> 
+            </CascadingValue> *@
+            
 @*             <GameIndustry.Pages.Counter /> *@
         </article>
     </main>
 </div>
+
+@code{
+    // string Color = "red";
+    // string Size = "65px";
+
+    AppStyle appStyle = new AppStyle();
+}
